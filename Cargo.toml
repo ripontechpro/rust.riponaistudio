@@ -1,0 +1,37 @@
+[package]
+name = "ripon-ai-photo-studio"
+version = "1.4.3"
+edition = "2021"
+description = "Ripon AI Photo Studio - Edit, Enhance, Create. Lean passport / ID photo studio."
+build = "build.rs"
+
+[lib]
+name = "ripon_studio"
+path = "src/lib.rs"
+
+[[bin]]
+name = "ripon-ai-photo-studio"
+path = "src/main.rs"
+
+[dependencies]
+ab_glyph = "0.2"
+chrono = { version = "0.4", default-features = false, features = ["clock"] }
+eframe = { version = "0.31", default-features = false, features = ["glow", "default_fonts", "x11", "wayland"] }
+image = { version = "0.25", default-features = false, features = ["jpeg", "png", "bmp", "webp"] }
+open = "5"
+rfd = { version = "0.15", default-features = false, features = ["xdg-portal", "tokio"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+zip = { version = "2", default-features = false, features = ["deflate"] }
+tract-onnx = "0.23"
+tract-linalg = { version = "0.23", features = ["multithread-mm"] }
+ureq = { version = "3", features = ["platform-verifier"] }
+
+[target.'cfg(windows)'.build-dependencies]
+winresource = "0.1"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 8
+strip = true
